@@ -12,9 +12,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var displayLabel: UILabel!
     
-    //Bool for if the user is finished typing:
-    var isFinishedTypingNum = true
-    
+    /*Bool for if the user is finished typing (using "private" keyword makes a property only visible in the current scope (in this case ViewController)):
+    */
+    private var isFinishedTypingNum = true
     
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         
