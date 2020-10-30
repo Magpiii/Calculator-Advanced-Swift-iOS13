@@ -25,6 +25,20 @@ class ViewController: UIViewController {
         
         //User is finished if they hit a calc button:
         isFinishedTypingNum = true
+        
+        guard var num = Double(displayLabel.text!) else{
+            fatalError("Error code 1: cannot convert display label text to double \"num\"")
+        }
+        
+        if let calcMethod = sender.currentTitle {
+            if (calcMethod == "+/-"){
+                displayLabel.text = String(format: "%.0f", num * -1)
+            } else if (sender.currentTitle == "AC"){
+                displayLabel.text = "0"
+            } else if (sender.currentTitle == "%"){
+                displayLabel.text = String(format: "%.0f", num / 100)
+            }
+        }
     }
 
     
