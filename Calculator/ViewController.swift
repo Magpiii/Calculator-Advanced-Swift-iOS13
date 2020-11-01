@@ -16,6 +16,19 @@ class ViewController: UIViewController {
     */
     private var isFinishedTypingNum = true
     
+    //Computed properties often save time and effort:
+    private var displayValue: Double{
+        get {
+            guard let labelText = Double(displayLabel.text!) else { fatalError("Error code 2: unexpectedly found nil when unwrapping displayLabel.text.") }
+            
+            return labelText
+        }
+        //Sets the display label to the new value once displayLabel is set:
+        set {
+            displayLabel.text = String(newValue)
+        }
+    }
+    
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         
         //What should happen when a non-number button is pressed
@@ -26,17 +39,13 @@ class ViewController: UIViewController {
         //User is finished if they hit a calc button:
         isFinishedTypingNum = true
         
-        guard var num = Double(displayLabel.text!) else{
-            fatalError("Error code 1: cannot convert display label text to double \"num\"")
-        }
-        
         if let calcMethod = sender.currentTitle {
             if (calcMethod == "+/-"){
-                displayLabel.text = String(format: "%.0f", num * -1)
+                displayValue *= -1
             } else if (sender.currentTitle == "AC"){
                 displayLabel.text = "0"
             } else if (sender.currentTitle == "%"){
-                displayLabel.text = String(format: "%.0f", num / 100)
+                displayValue /= 100
             }
         }
     }
@@ -70,6 +79,20 @@ class ViewController: UIViewController {
                 /*Continues adding numbers to the display label as long as the user hasn't pressed a calc button:
                 */
                 displayLabel.text! += numValue
+                
+                if (numValue == "."){
+                    /*The "floor" method allows one to round down a double or float:
+                    */
+                    
+                    //Shorthand way to declare a Boolean:
+                    let isInt = floor(displayValue) == displayValue
+                    
+                    if !isInt{
+                        /*Simply putting "return" tells the current function to stop:
+                        */
+                        return
+                    }
+                }
             }
             
         }
