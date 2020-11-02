@@ -9,38 +9,49 @@
 import Foundation
 
 class CalcLogic{
-    var storedProp1: Double{
-        get{
-            
+    var num: Double?
+    
+    init(num: Double){
+        self.num = num
+    }
+    
+    //Example of nil checking:
+    func calculate (symbol: String) -> Double? {
+        if num != nil{
+            if (symbol == "+/-") {
+                num! *= -1
+            }
+            else if (symbol == "AC") {
+                num = 0.0
+            }
+            else if (symbol == "%") {
+                num! /= 100
+            }
         }
+        return num
     }
-    var storedProp2: Double{
-        get{
-            
+}
+
+struct Calculator{
+    var num: Double?
+    
+    init(num: Double){
+        self.num = num
+    }
+    
+    //Example of nil checking:
+    mutating func calculate (symbol: String) -> Double? {
+        if num != nil{
+            if (symbol == "+/-") {
+                num! *= -1
+            }
+            else if (symbol == "AC") {
+                num = 0.0
+            }
+            else if (symbol == "%") {
+                num! /= 100
+            }
         }
-    }
-    
-    func add(_ n1: Double, _ n2: Double) -> Double {
-        let sum = n1 + n2
-        
-        return sum
-    }
-    
-    func subtract(_ n1: Double, _ n2: Double) -> Double {
-        let difference = n1 + n2
-        
-        return difference
-    }
-    
-    func multiply(_ n1: Double, _ n2: Double) -> Double {
-        let product = n1 * n2
-        
-        return product
-    }
-    
-    func divide(_ n1: Double, _ n2: Double) -> Double {
-        let quotient = n1 + n2
-        
-        return quotient
+        return num
     }
 }

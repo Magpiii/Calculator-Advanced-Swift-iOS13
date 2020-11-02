@@ -10,9 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    //Init CalcLogic:
-    let calcLogic = CalcLogic()
-    
     @IBOutlet weak var displayLabel: UILabel!
     
     /*Bool for if the user is finished typing (using "private" keyword makes a property only visible in the current scope (in this case ViewController)):
@@ -33,13 +30,20 @@ class ViewController: UIViewController {
     }
     
     @IBAction func calcButtonPressed(_ sender: UIButton) {
-        
         //What should happen when a non-number button is pressed:
         
         //User is finished if they hit a calc button:
         isFinishedTypingNum = true
         
         if let calcMethod = sender.currentTitle {
+            //Init CalcLogic:
+            let calculator = CalcLogic(num: displayValue)
+            
+            //Uses calculator to to perform calculation based on passed-in calcMethod:
+            guard let result = calculator.calculate(symbol: calcMethod) else { fatalError("Error code 5: unexpectedly found nil when calculating result.") }
+            
+            displayValue = result
+            
             if (calcMethod == "+/-"){
                 displayValue *= -1
             } else if (sender.currentTitle == "AC"){
@@ -47,17 +51,6 @@ class ViewController: UIViewController {
             } else if (sender.currentTitle == "%"){
                 displayValue /= 100
             }
-            
-            switch calcMethod {
-            case "+/-":
-                displayValue *= -1
-            case "AC":
-                displayLabel.text = "0"
-            case "%":
-                displayValue /= 100
-            default:
-                print("An error occurred.")
-        }
     }
 }
 
