@@ -10,6 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    //Init CalcLogic:
+    private var calculator = Calculator()
+    
     @IBOutlet weak var displayLabel: UILabel!
     
     /*Bool for if the user is finished typing (using "private" keyword makes a property only visible in the current scope (in this case ViewController)):
@@ -36,8 +39,6 @@ class ViewController: UIViewController {
         isFinishedTypingNum = true
         
         if let calcMethod = sender.currentTitle {
-            //Init CalcLogic:
-            let calculator = CalcLogic(num: displayValue)
             
             //Uses calculator to to perform calculation based on passed-in calcMethod:
             guard let result = calculator.calculate(symbol: calcMethod) else { fatalError("Error code 5: unexpectedly found nil when calculating result.") }
