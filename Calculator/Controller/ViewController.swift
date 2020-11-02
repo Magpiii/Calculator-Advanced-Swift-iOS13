@@ -10,6 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    //Init CalcLogic:
+    let calcLogic = CalcLogic()
+    
     @IBOutlet weak var displayLabel: UILabel!
     
     /*Bool for if the user is finished typing (using "private" keyword makes a property only visible in the current scope (in this case ViewController)):
@@ -31,10 +34,7 @@ class ViewController: UIViewController {
     
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         
-        //What should happen when a non-number button is pressed
-        
-        //Sets the display label back to "0" if the user presses the AC button:
-        displayLabel.text = "0"
+        //What should happen when a non-number button is pressed:
         
         //User is finished if they hit a calc button:
         isFinishedTypingNum = true
@@ -47,8 +47,19 @@ class ViewController: UIViewController {
             } else if (sender.currentTitle == "%"){
                 displayValue /= 100
             }
+            
+            switch calcMethod {
+            case "+/-":
+                displayValue *= -1
+            case "AC":
+                displayLabel.text = "0"
+            case "%":
+                displayValue /= 100
+            default:
+                print("An error occurred.")
         }
     }
+}
 
     
     @IBAction func numButtonPressed(_ sender: UIButton) {
