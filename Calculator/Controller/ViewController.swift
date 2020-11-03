@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    //Init CalcLogic:
+    //Init Calculator:
     private var calculator = Calculator()
     
     @IBOutlet weak var displayLabel: UILabel!
@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     //Computed properties often save time and effort:
     private var displayValue: Double{
         get {
+            /*Guard lets are really only necessary when the alternate case is something that REALLY REALLY REALLY should not happen. Otherwise, an if-let is preferable:
+            */
             guard let labelText = Double(displayLabel.text!) else { fatalError("Error code 2: unexpectedly found nil when unwrapping displayLabel.text.") }
             
             return labelText
@@ -39,30 +41,18 @@ class ViewController: UIViewController {
         isFinishedTypingNum = true
         
         if let calcMethod = sender.currentTitle {
-            
             //Uses calculator to to perform calculation based on passed-in calcMethod:
-            guard let result = calculator.calculate(symbol: calcMethod) else { fatalError("Error code 5: unexpectedly found nil when calculating result.") }
-            
-            displayValue = result
-            
-            if (calcMethod == "+/-"){
-                displayValue *= -1
-            } else if (sender.currentTitle == "AC"){
-                displayLabel.text = "0"
-            } else if (sender.currentTitle == "%"){
-                displayValue /= 100
+            if let result = calculator.calculate(symbol: calcMethod){
+                displayValue = result
             }
     }
 }
 
     
     @IBAction func numButtonPressed(_ sender: UIButton) {
-        
         //What should happen when a number is entered into the keypad
         
-        
-        /*Optionally binds numValue because sender.currentTitle is an optional:
-        */
+        //Optionally binds numValue because sender.currentTitle is an optional:
         if let numValue = sender.currentTitle {
             /*
             if (displayLabel.text != "0"){
@@ -93,8 +83,7 @@ class ViewController: UIViewController {
                     let isInt = floor(displayValue) == displayValue
                     
                     if !isInt{
-                        /*Simply putting "return" tells the current function to stop:
-                        */
+                        //Simply putting "return" tells the current function to stop:
                         return
                     }
                 }
